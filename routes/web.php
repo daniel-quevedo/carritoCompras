@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\productsController;
+use App\Http\Controllers\shoppingCartController;
 use App\Http\Controllers\usersController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,7 @@ Route::post('añadirProducto', [productsController::class, 'addProduct'])->name(
 Route::post('mostrarProcucto', [productsController::class, 'showProduct'])->name('showProduct');
 Route::post('aditarProducto', [productsController::class, 'editProduct'])->name('editProduct');
 Route::post('eliminarProducto', [productsController::class, 'deleteProduct'])->name('deleteProduct');
+
+Route::post('mostrarCarrito', [shoppingCartController::class, 'showShopping'])->name('showShopping');
+Route::post('añadirCarrito', [shoppingCartController::class, 'addShopping'])->name('addShopping');
+Route::post('eliminarCompras', [shoppingCartController::class, 'deleteShopping'])->name('deleteShopping');

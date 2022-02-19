@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="quantity" class="form-label">Cantidad:</label>
-            <input type="text" name="quantity" class="form-control" pattern="[9-0]" value="{{ $productEdit[0]->stock }}" required>
+            <input type="number" name="quantity" class="form-control" value="{{ $productEdit[0]->stock }}" required>
         </div>
         <div class="form-group mt-3">
             <button type="submit" class="btn btn-danger">Cancelar</button>

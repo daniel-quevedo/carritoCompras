@@ -57,5 +57,4 @@ class productsController extends Controller
 
         return redirect()->route('products');
     }
-
 }
