@@ -27,7 +27,8 @@ class shoppingCartController extends Controller
         DB::table('products')
             ->where('id', $request->idProduct)
             ->update([
-                'stock' => $request->quantityProduct-1
+                'stock' => $request->quantityProduct-1,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
 
 
@@ -36,7 +37,8 @@ class shoppingCartController extends Controller
             DB::table('shopping_cart')
             ->where('idProduct', $request->idProduct)
             ->update([
-                'stock' => $productExist->stock+1
+                'stock' => $productExist->stock+1,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         } else {
             DB::table('shopping_cart')->insert([
@@ -44,11 +46,13 @@ class shoppingCartController extends Controller
                 'description' => $request->descriptionProduct,
                 'stock' => 1,
                 'idUser' => 1,
-                'idProduct' => $request->idProduct
+                'idProduct' => $request->idProduct,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         }
 
-        return redirect()->route('products');
+        return redirect()->route('products')->with('addShop','Agregado al carrito');
     }
 
     // Borrar productos del carrito =============
@@ -64,13 +68,15 @@ class shoppingCartController extends Controller
             DB::table('shopping_cart')
             ->where('id', $request->idShoppingProduct)
             ->update([
-                'stock' => $request->quantityShoppingProduct-1
+                'stock' => $request->quantityShoppingProduct-1,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
 
             DB::table('products')
             ->where('id', $request->idProduct)
             ->update([
-                'stock' => $productExist->stock+1
+                'stock' => $productExist->stock+1,
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
         }else if ($request->all == 1) {
 
@@ -79,6 +85,6 @@ class shoppingCartController extends Controller
             ->delete();
         }
 
-        return redirect()->route('products');
+        return redirect()->route('products')->with('deleteShop','Eliminado del carrito');
     }
 }

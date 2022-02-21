@@ -8,6 +8,14 @@
     <title>@yield('title','Carrito')</title>
 </head>
 <body>
+    <div>
+        <form action="{{ route('products') }}" method="get">
+            <button type="submit" class="btn btn-secondary">Volver</button>
+        </form>
+    </div>
+    <div class="text-center">
+        <h3>Mis Productos</h3>
+    </div>
     @section('content')
     <div class="row justify-content-center">
         @if ($shoppingView)

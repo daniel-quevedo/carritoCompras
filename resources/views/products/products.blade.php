@@ -9,10 +9,28 @@
 </head>
 <body>
     @section('content')
-    <form class="justify-content-end"  action="{{ route('showShopping') }}" method="post">
-        @csrf
-        <button type="submit" class="btn btn-warning">Tu Carrito <img src="shopping-cart.svg"></button>
-    </form>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-light mb-4">
+            <div>
+                <form action="{{ route('importProducts') }}" class="d-flex" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input name="imports" class="form-control mx-2" type="file" accept=".xlsx" required>
+                    <button class="btn btn-outline-primary" type="submit">Importar</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <form class="justify-content-end"  action="{{ route('showShopping') }}" method="post">
+            @csrf
+            <button type="submit" class="btn btn-warning position-relative">Tu Carrito <img src="shopping-cart.svg">
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ $shoppingView->count() }}
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </button>
+        </form>
+    </div>
     <div class="text-center">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalProduct">Añadir Producto</button>
         <h1>Productos</h1>
@@ -57,6 +75,37 @@
         @endif
     </div>
     @endsection
+    {{-- =================== Mensajes ================== --}}
+    @if (session('deleteShop'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('deleteShop') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('addShop'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('addShop') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('addProd'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('addProd') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('editProd'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('editProd') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('deleteProd'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('deleteProd') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 </body>
 
 {{-- ========= Modal Añadir Producto =========== --}}
@@ -91,6 +140,5 @@
         </div>
     </div>
 </div>
-
 
 </html>

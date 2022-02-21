@@ -28,3 +28,5 @@ Route::post('eliminarProducto', [productsController::class, 'deleteProduct'])->n
 Route::post('mostrarCarrito', [shoppingCartController::class, 'showShopping'])->name('showShopping');
 Route::post('añadirCarrito', [shoppingCartController::class, 'addShopping'])->name('addShopping');
 Route::post('eliminarCompras', [shoppingCartController::class, 'deleteShopping'])->name('deleteShopping');
+
+Route::post('importarProductos', [productsController::class, 'importProducts'])->name('importProducts');
