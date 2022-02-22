@@ -21,7 +21,7 @@
         </nav>
     </header>
     <div>
-        <form class="justify-content-end"  action="{{ route('showShopping') }}" method="post">
+        <form  action="{{ route('showShopping') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-warning position-relative">Tu Carrito <img src="shopping-cart.svg">
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -73,6 +73,9 @@
             </div>
             @endforeach
         @endif
+        {{-- Paginación de los productos --}}
+        {{ $productsView->links() }}
+        {{-- =========================== --}}
     </div>
     @endsection
     {{-- =================== Mensajes ================== --}}

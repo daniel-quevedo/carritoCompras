@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductsImport;
-use DateTime;
+use App\Models\Product;
 
 class productsController extends Controller
 {
     // Mostrar productos ========================
     public function listProducts(Request $request)
     {
-        $productsView = DB::table('products')->get();
+        $productsView = Product::paginate(9);
+
         $shoppingView = DB::table('shopping_cart')->get();
 
         return view('products/products', compact('productsView','shoppingView'));
@@ -23,13 +24,15 @@ class productsController extends Controller
     public function addProduct(Request $request)
     {
 
-        DB::table('products')->insert([
-            'name'=> $request->name,
-            'description' => $request->description,
-            'stock' => $request->quantity,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        $addProduct = new Product();
+
+        $addProduct->name = $request->name;
+        $addProduct->description = $request->description;
+        $addProduct->stock = $request->quantity;
+        $addProduct->created_at = date('Y-m-d H:i:s');
+        $addProduct->updated_at = date('Y-m-d H:i:s');
+
+        $addProduct->save();
 
         return redirect()->route('products')->with('addProd','Añadido Exitosamente');
     }

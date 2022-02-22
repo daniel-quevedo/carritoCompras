@@ -59,18 +59,26 @@ class shoppingCartController extends Controller
     public function deleteShopping(Request $request)
     {
 
+        //dd($request);
+
         $productExist = DB::table('products')
         ->where('id',$request->idProduct)
         ->first();
 
         if ($request->one == 1) {
 
-            DB::table('shopping_cart')
-            ->where('id', $request->idShoppingProduct)
-            ->update([
-                'stock' => $request->quantityShoppingProduct-1,
-                'updated_at' => date('Y-m-d H:i:s')
-            ]);
+            if ($request->quantityShoppingProduct == 1) {
+                DB::table('shopping_cart')
+                ->where('id', $request->idShoppingProduct)
+                ->delete();
+            } else {
+                DB::table('shopping_cart')
+                ->where('id', $request->idShoppingProduct)
+                ->update([
+                    'stock' => $request->quantityShoppingProduct-1,
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+            }
 
             DB::table('products')
             ->where('id', $request->idProduct)
@@ -79,10 +87,16 @@ class shoppingCartController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
         }else if ($request->all == 1) {
-
             DB::table('shopping_cart')
-            ->where('id', $request->idProduct)
+            ->where('id', $request->idShoppingProduct)
             ->delete();
+
+            DB::table('products')
+            ->where('id', $request->idProduct)
+            ->update([
+                'stock' => $productExist->stock+$request->quantityShoppingProduct,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         }
 
         return redirect()->route('products')->with('deleteShop','Eliminado del carrito');

@@ -8,6 +8,7 @@
     <title>@yield('title','Carrito')</title>
 </head>
 <body>
+    @section('content')
     <div>
         <form action="{{ route('products') }}" method="get">
             <button type="submit" class="btn btn-secondary">Volver</button>
@@ -16,7 +17,6 @@
     <div class="text-center">
         <h3>Mis Productos</h3>
     </div>
-    @section('content')
     <div class="row justify-content-center">
         @if ($shoppingView)
             @foreach ($shoppingView as $item)

@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/', [usersController::class, 'index'])->name('index');
+Route::get('/', [usersController::class, 'index'])->name('index');
+Route::post('/inicioSesion', [usersController::class, 'login'])->name('login');
+Route::get('/vistaRegistro', [usersController::class, 'viewRegister'])->name('viewRegister');
+Route::post('/registro', [usersController::class, 'register'])->name('register');
 
 Route::get('productos', [productsController::class, 'listProducts'])->name('products');
 Route::post('añadirProducto', [productsController::class, 'addProduct'])->name('addProduct');
